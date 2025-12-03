@@ -1,27 +1,9 @@
 import os
 #importing things
-try:
-    import PIL
-except ImportError:
-    os.system("pip install Pillow")
-    import PIL
-try:
-    import pyautogui
-except ImportError:
-    os.system("pip install pyautogui")
-    import pyautogui
-try:
-    from time import sleep
-except ImportError:
-    os.system("pip install time")
-    from time import sleep
-try:
-    import win32api, win32con
-except ImportError:
-
-    os.system("pip install pywin32")
-    import win32api, win32con
-os.system("pip install opencv-python")
+import PIL
+import pyautogui
+from time import sleep
+import win32api, win32con
 
 #getting the scroll speed
 #scroll=int(input("Enter scroll speed. default is 490. higher is faster. \nLeave blank for default.\nspeed: "))
@@ -69,7 +51,7 @@ while pyautogui.position()[0]>5 and pyautogui.position()[1]>-1075:
     #scroll
     pyautogui.scroll(scroll)
     print("scrolled\n")
-    sleep(3.51)
+    sleep(3.1)
 print("quitting")
 sleep(1)
 quit()

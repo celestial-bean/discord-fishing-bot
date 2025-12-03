@@ -1,0 +1,5 @@
+pillow
+pyautogui
+time
+pywin32
+opencv-python
