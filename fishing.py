@@ -12,37 +12,34 @@ import win32api, win32con
 # elif scroll>0:
 #     scroll*=-1
 scroll=-490
-confidence=0.9
+confidence=1
 failStreak=0
 
-def click():
+def click(position):
     win32api.SetCursorPos(position)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
     sleep(0.01)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
 
-#ignore
-
-##while True:
-##    button_location = pyautogui.locateOnScreen('heart.png', confidence=confidence)
-##    if button_location==None:
-##        confidence-=.025
-##    else:
-##        break
-
-    #find the heart button and click it
-# while True:
-#     print(pyautogui.position())
-#     sleep(.5)
 while pyautogui.position()[0]>5 and pyautogui.position()[1]>-1075:
-    button_location = pyautogui.locateOnScreen('button.png', confidence=confidence, grayscale=False)
-    if button_location!=None:
+    try:
+        button_location = pyautogui.locateOnScreen('button.png', confidence=confidence, grayscale=False)
+        print(f"Found button with confidence {confidence}")
+        break
+    except Exception as e:
+        confidence-=.025
+        print(confidence, e)
+button_location=None
+
+while pyautogui.position()[0]>5 and pyautogui.position()[1]>-1075:
+    try:
+        button_location = pyautogui.locateOnScreen('button.png', confidence=confidence, grayscale=False)
         button_x, button_y=pyautogui.center(button_location)
         position=button_x, button_y
-        click()
+        click(position)
         failStreak=0
         print("clicked button")
-    else:
+    except:
         failStreak+=1
         print("fail streak = " + str(failStreak))
         #confidence-=.05
