@@ -11,7 +11,7 @@ import win32api, win32con
 #     scroll=-490
 # elif scroll>0:
 #     scroll*=-1
-fish_delay=2.7
+fish_delay=2.4
 
 def click(position):
     win32api.SetCursorPos(position)
@@ -27,18 +27,22 @@ while pyautogui.position()[0]>5 and pyautogui.position()[1]>-1075:
     try:
         pyautogui.locateOnScreen('button.png', confidence=confidence, grayscale=False)
         print(f"Found button with confidence {confidence}")
+        break
     except:
         try:
             pyautogui.locateOnScreen('button2.png', confidence=confidence, grayscale=False)
             print(f"Found button with confidence {confidence}")
+            break
         except:
             try:
                 pyautogui.locateOnScreen('back.png', confidence=confidence, grayscale=False)
                 print(f"Found button with confidence {confidence}")
+                break
             except Exception as e:
                 try:
                     pyautogui.locateOnScreen('return.png', confidence=confidence, grayscale=False)
                     print(f"Found button with confidence {confidence}")
+                    break
                 except:
                     try:
                         pyautogui.locateOnScreen('message.png', confidence=confidence, grayscale=False)           
@@ -74,8 +78,9 @@ while pyautogui.position()[0]>5 and pyautogui.position()[1]>-1075:
                         position=button_x, button_y
                         click(position)
                         pyautogui.write("/fish", interval=0.05)
+                        sleep(0.1)
                         pyautogui.press('enter')
-                        sleep(0.05)
+                        sleep(0.1)
                         pyautogui.press('enter')
                         delay=fish_delay
                     except:
