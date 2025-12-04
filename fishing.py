@@ -73,9 +73,11 @@ while pyautogui.position()[0]>5 and pyautogui.position()[1]>-1075:
                         button_x, button_y=pyautogui.center(button_location)
                         position=button_x, button_y
                         click(position)
-                        pyautogui.write("/fish", interval=0.1)
+                        pyautogui.write("/fish", interval=0.05)
                         pyautogui.press('enter')
+                        sleep(0.05)
                         pyautogui.press('enter')
+                        delay=fish_delay
                     except:
                         print(e)
                         failStreak+=1
