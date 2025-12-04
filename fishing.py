@@ -11,7 +11,7 @@ import win32api, win32con
 #     scroll=-490
 # elif scroll>0:
 #     scroll*=-1
-delay=3.0
+fish_delay=2.7
 
 def click(position):
     win32api.SetCursorPos(position)
@@ -22,32 +22,74 @@ def click(position):
 scroll=-490
 confidence=1
 failStreak=0
-
+delay=fish_delay
 while pyautogui.position()[0]>5 and pyautogui.position()[1]>-1075:
     try:
-        button_location = pyautogui.locateOnScreen('button.png', confidence=confidence, grayscale=False)
+        pyautogui.locateOnScreen('button.png', confidence=confidence, grayscale=False)
         print(f"Found button with confidence {confidence}")
-        break
-    except Exception as e:
-        confidence-=.025
-        print(confidence, e)
-button_location=None
+    except:
+        try:
+            pyautogui.locateOnScreen('button2.png', confidence=confidence, grayscale=False)
+            print(f"Found button with confidence {confidence}")
+        except:
+            try:
+                pyautogui.locateOnScreen('back.png', confidence=confidence, grayscale=False)
+                print(f"Found button with confidence {confidence}")
+            except Exception as e:
+                try:
+                    pyautogui.locateOnScreen('return.png', confidence=confidence, grayscale=False)
+                    print(f"Found button with confidence {confidence}")
+                except:
+                    try:
+                        pyautogui.locateOnScreen('message.png', confidence=confidence, grayscale=False)           
+                        print(f"Found button with confidence {confidence}")
+                        break
+                    except Exception as e:
+                        confidence-=.025
+                        print(confidence, e)
 
 while pyautogui.position()[0]>5 and pyautogui.position()[1]>-1075:
     try:
         button_location = pyautogui.locateOnScreen('button.png', confidence=confidence, grayscale=False)
-        button_x, button_y=pyautogui.center(button_location)
-        position=button_x, button_y
-        click(position)
-        failStreak=0
-        print("clicked button")
+        delay=fish_delay
     except:
-        failStreak+=1
-        print("fail streak = " + str(failStreak))
-        if failStreak==5:
-            confidence-=.025
-            print(confidence)
-            failStreak=0
+        try:
+            button_location = pyautogui.locateOnScreen('button2.png', confidence=confidence, grayscale=False)
+            delay=fish_delay
+        except:
+            try:
+                button_location = pyautogui.locateOnScreen('back.png', confidence=confidence, grayscale=False)
+                print("found back button")
+                delay=0.5
+            except Exception as e:
+                try:
+                    button_location = pyautogui.locateOnScreen('return.png', confidence=confidence, grayscale=False)
+                    print("found return button")
+                    delay=0.5
+                except:
+                    try:
+                        print("found message box")
+                        button_location = pyautogui.locateOnScreen('message.png', confidence=confidence, grayscale=False)           
+                        button_x, button_y=pyautogui.center(button_location)
+                        position=button_x, button_y
+                        click(position)
+                        pyautogui.write("/fish", interval=0.1)
+                        pyautogui.press('enter')
+                        pyautogui.press('enter')
+                    except:
+                        print(e)
+                        failStreak+=1
+                        print("fail streak = " + str(failStreak))
+                        if failStreak==7:
+                            confidence-=.0125
+                            print(confidence)
+                            failStreak=0
+                        continue
+    button_x, button_y=pyautogui.center(button_location)
+    position=button_x, button_y
+    click(position)
+    failStreak=0
+    print("clicked button")
     button_location = None
 
     #scroll
