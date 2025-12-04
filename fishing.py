@@ -11,15 +11,17 @@ import win32api, win32con
 #     scroll=-490
 # elif scroll>0:
 #     scroll*=-1
-scroll=-490
-confidence=1
-failStreak=0
+delay=3.0
 
 def click(position):
     win32api.SetCursorPos(position)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
     sleep(0.01)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
+
+scroll=-490
+confidence=1
+failStreak=0
 
 while pyautogui.position()[0]>5 and pyautogui.position()[1]>-1075:
     try:
@@ -48,7 +50,7 @@ while pyautogui.position()[0]>5 and pyautogui.position()[1]>-1075:
     #scroll
     pyautogui.scroll(scroll)
     print("scrolled\n")
-    sleep(3.1)
+    sleep(delay)
 print("quitting")
 sleep(1)
 quit()
