@@ -44,9 +44,10 @@ while pyautogui.position()[0]>5 and pyautogui.position()[1]>-1075:
     except:
         failStreak+=1
         print("fail streak = " + str(failStreak))
-        if failStreak==10:
+        if failStreak==5:
             confidence-=.025
-        failStreak=5
+            print(confidence)
+            failStreak=0
     button_location = None
 
     #scroll
